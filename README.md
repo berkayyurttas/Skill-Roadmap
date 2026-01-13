@@ -2,64 +2,69 @@
 
 # 🚀 Skill-Roadmap: Öğrenci Gelişim ve Mentorluk Takip Portalı
 
-Bu proje, öğrencilerin gelişim süreçlerini takip etmek ve mentorluk faaliyetlerini yönetmek amacıyla geliştirilen, modern yazılım mimarilerini barındıran kapsamlı bir web uygulamasıdır.
+Bu proje, öğrencilerin akademik ve kişisel gelişim süreçlerini modernize etmek, mentorluk faaliyetlerini sistemli bir yapıda takip etmek amacıyla geliştirilmiştir. **ABP Framework** üzerine inşa edilen uygulama, mikroservis odaklı bir yaklaşımla tamamen konteynerize (dockerize) edilmiştir.
 
-## 🛠️ Kullanılan Teknolojiler
-* **Backend:** .NET 10 (ABP Framework tabanlı)
-* **Frontend:** Angular (Production Mode)
-* **Database:** PostgreSQL 16 (Dockerize)
-* **Cache:** Redis
-* **Containerization:** Docker & Docker Compose
-* **API Documentation:** Swagger UI
+## 🏗️ Mimari ve Teknik Stack
 
----
-
-## 🏗️ Adım Adım Neler Yaptık? (Geliştirme Günlüğü)
-
-Bu projenin Docker ortamında kusursuz çalışması için aşağıdaki kritik süreçler yönetilmiştir:
-
-### 1. Ortamın Hazırlanması (Dockerize)
-* Uygulama; Backend, Frontend, PostgreSQL ve Redis servisleri olarak parçalara bölündü.
-* Tüm servislerin birbiriyle izole ve güvenli şekilde konuşabilmesi için bir `docker-compose.yml` ağı kuruldu.
-
-### 2. Veritabanı Migration ve Seed Data
-* `DbMigrator` servisi kullanılarak PostgreSQL veritabanı şeması oluşturuldu ve başlangıç (admin) verileri yüklendi.
-
-### 3. SSL ve Kimlik Doğrulama (Auth) Çözümü
-* Docker konteynerleri arasında SSL sertifikası karmaşasını önlemek için `http` protokolü üzerinden güvenli bir iletişim köprüsü kuruldu.
-* Veritabanındaki `OpenIddictApplications` tabloları SQL ile güncellenerek (Redirect URIs), Angular ve Swagger girişlerindeki "400 Bad Request" hataları giderildi.
-
-### 4. Swagger ve API Entegrasyonu
-* Swagger JSON tanımları doğrulanarak backend servisinin API dökümantasyonu erişilebilir hale getirildi.
-* OAuth2 akışı (authorization code flow) yapılandırılarak Swagger üzerinden doğrudan API testi yapma imkanı sağlandı.
+* **Backend:** .NET 10 (C#) - ABP Framework tabanlı modüler monolit mimari.
+* **Frontend:** Angular 18+ (Production Mode).
+* **Veritabanı ve ORM:** * **Entity Framework Core (EF Core):** Code-First yaklaşımı ile tüm veritabanı şeması yönetildi.
+    * **PostgreSQL 16:** Ana veri depolama katmanı.
+* **Cache:** Redis (Dağıtık önbellekleme).
+* **Containerization:** Docker & Docker Compose (Çoklu servis orkestrasyonu).
+* **Identity & Auth:** OpenIddict (OAuth2 & OpenID Connect).
+* **API Documentation:** Swagger UI.
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## 🛠️ Uygulanan Kritik Geliştirme Süreçleri
 
-Projeyi yerelinizde çalıştırmak için aşağıdaki adımları izleyin:
+### 1. Veritabanı Yönetimi & EF Core Migration
+Projede veritabanı bağımsızlığı ve versiyon kontrolü için EF Core Code-First yaklaşımı kullanılmıştır:
+* **Auto-Migration:** `SkillRoadmap.DbMigrator` servisi ile uygulama ayağa kalkmadan önce veritabanı şeması otomatik olarak valide edilir.
+* **Data Seeding:** Başlangıç verileri (Initial Seed Data), admin yetkileri ve sistem ayarları migration sürecinde otomatik olarak PostgreSQL'e işlenmiştir.
+
+### 2. Profesyonel Dockerization (Konteynerleştirme)
+Tüm ekosistem Docker üzerinde izole bir ağda çalışacak şekilde yapılandırıldı:
+* **Multi-Stage Builds:** Backend ve Frontend için optimize edilmiş Dockerfile'lar hazırlandı.
+* **Orkestrasyon:** `docker-compose.yml` ile Backend, Frontend, DB ve Redis servisleri arasındaki bağımlılıklar (Depends_on) ve network köprüleri kuruldu.
+* **Volume Mapping:** Veritabanı verilerinin konteyner silindiğinde kaybolmaması için Docker Volume yapılandırması yapıldı.
+
+### 3. Kimlik Doğrulama ve Yönlendirme Çözümleri
+Docker ortamında en sık karşılaşılan Auth (Yetkilendirme) sorunları kökten çözüldü:
+* **Protocol Transition:** Docker içi SSL karmaşasını aşmak için iletişim `http` protokolüne normalize edildi.
+* **SQL Patching:** Veritabanındaki `OpenIddictApplications` tablolarındaki Redirect URI'lar terminal üzerinden SQL komutlarıyla (REPLACE) güncellenerek Angular ve Swagger giriş süreçleri stabilize edildi.
+
+---
+
+## 🚀 Kurulum ve Yerel Çalıştırma
+
+Projeyi yerel makinenizde tüm servisleriyle çalıştırmak için:
 
 1.  **Repoyu Klonlayın:**
     ```bash
     git clone [https://github.com/berkayyurttas/Skill-Roadmap.git](https://github.com/berkayyurttas/Skill-Roadmap.git)
+    cd Skill-Roadmap
     ```
 
-2.  **Docker Konteynerlerini Kaldırın:**
+2.  **Docker ile Yayına Alın:**
     ```bash
     docker-compose up -d
     ```
+    *(Bu komut PostgreSQL, Redis, Backend ve Frontend servislerini otomatik olarak indirir, derler ve çalıştırır.)*
 
-3.  **Uygulamaya Erişin:**
-    * **Frontend:** `http://localhost:4200`
-    * **Backend / Swagger:** `http://localhost:44334/swagger`
+3.  **Uygulama Portları:**
+    * **Angular UI:** `http://localhost:4200`
+    * **Swagger API:** `http://localhost:44334/swagger`
+    * **Database:** `localhost:5435` (PostgreSQL)
 
-### 🔑 Giriş Bilgileri
-* **Kullanıcı Adı:** `admin`
-* **Şifre:** `1q2w3E*`
+### 🔑 Test Kullanıcı Bilgileri
+* **Username:** `admin`
+* **Password:** `1q2w3E*`
 
 ---
 
-## 📈 Gelecek Planları (CI/CD)
-* [ ] GitHub Actions ile otomatik derleme (Build) ve test süreçleri.
-* [ ] Docker Image'larının otomatik olarak Docker Hub'a pushlanması.
-* [ ] Azure/AWS gibi bulut platformlarına otomatik dağıtım (Deployment).
+## 📈 Yol Haritası (CI/CD)
+- [ ] **GitHub Actions CI:** Her Push sonrası otomatik Build ve EF Core Migration testleri.
+- [ ] **Docker Hub CD:** Başarılı build sonrası Image'ların otomatik olarak Docker Hub'a gönderilmesi.
+- [ ] **Cloud Deployment:** Azure/AWS üzerinde canlıya alım süreci.
