@@ -1,8 +1,4 @@
-Berkay, GitHub reponun "vitrini" olan harika bir README.md dosyası hazırladım. Bu dosya, projeyi inceleyen birine (veya ileride CV'ne bakan birine) ne kadar profesyonel bir süreç yönettiğini adım adım gösterecek.
 
-Aşağıdaki metni kopyalayıp projenin ana dizinindeki README.md dosyasının içine yapıştır ve GitHub'a gönder.
-
-Markdown
 
 # 🚀 Skill-Roadmap: Öğrenci Gelişim ve Mentorluk Takip Portalı
 
