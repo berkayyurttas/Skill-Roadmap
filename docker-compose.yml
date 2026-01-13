@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: skillroadmap_db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=SkillRoadmapDb
+    ports:
+      - "5435:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: skillroadmap_redis
+    ports:
+      - "6381:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skillroadmap_backend
+    ports:
+      - "44334:8080" # Dışarıdan 44334 ile gelince içeride 8080'e gider
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080 # Backend'in konteyner içinde 8080'i dinlemesini zorunlu kılar
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=SkillRoadmapDb;Username=admin;Password=password123
+      - Redis__Configuration=skillroadmap_redis:6379
+      - App__SelfUrl=http://localhost:44334
+      - App__AngularUrl=http://localhost:4200
+      - App__CorsOrigins=http://localhost:4200
+      - AuthServer__Authority=http://localhost:44334
+      - AuthServer__RequireHttpsMetadata=false
+      - AuthServer__CertificatePassPhrase=123456 # DbMigrator'da kullandığımız şifre
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build:
+      context: ./angular
+      dockerfile: Dockerfile
+    container_name: skillroadmap_frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend

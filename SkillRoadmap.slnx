@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/SkillRoadmap.Domain/SkillRoadmap.Domain.csproj" />
+        <Project Path="src/SkillRoadmap.Application/SkillRoadmap.Application.csproj" />
+        <Project Path="src/SkillRoadmap.EntityFrameworkCore/SkillRoadmap.EntityFrameworkCore.csproj" />
+        <Project Path="src/SkillRoadmap.Domain.Shared/SkillRoadmap.Domain.Shared.csproj" />
+        <Project Path="src/SkillRoadmap.Application.Contracts/SkillRoadmap.Application.Contracts.csproj" />
+        <Project Path="src/SkillRoadmap.HttpApi/SkillRoadmap.HttpApi.csproj" />
+        <Project Path="src/SkillRoadmap.HttpApi.Client/SkillRoadmap.HttpApi.Client.csproj" />
+        <Project Path="src/SkillRoadmap.DbMigrator/SkillRoadmap.DbMigrator.csproj" />
+        <Project Path="src/SkillRoadmap.HttpApi.Host/SkillRoadmap.HttpApi.Host.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/SkillRoadmap.Application.Tests/SkillRoadmap.Application.Tests.csproj" />
+        <Project Path="test/SkillRoadmap.EntityFrameworkCore.Tests/SkillRoadmap.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/SkillRoadmap.TestBase/SkillRoadmap.TestBase.csproj" />
+        <Project Path="test/SkillRoadmap.Domain.Tests/SkillRoadmap.Domain.Tests.csproj" />
+        <Project Path="test/SkillRoadmap.HttpApi.Client.ConsoleTestApp/SkillRoadmap.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

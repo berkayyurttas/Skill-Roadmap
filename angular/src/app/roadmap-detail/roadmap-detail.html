@@ -1,0 +1,115 @@
+<div class="container mt-5">
+  <div class="d-flex align-items-center mb-4">
+    <button class="btn btn-outline-secondary btn-sm me-3 shadow-sm" routerLink="/roadmaps">
+      <i class="fa fa-arrow-left"></i> Listeye Dön
+    </button>
+    <h2 class="m-0 fw-bold roadmap-title">{{ roadmap.title }}</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 mb-4 roadmap-card">
+        <div class="card-body">
+          <h5 class="text-primary fw-bold mb-3">
+            <i class="fa fa-info-circle me-2"></i>Açıklama
+          </h5>
+          <p class="text-muted mb-0" style="line-height: 1.6;">{{ roadmap.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0 roadmap-card">
+        <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-3 border-bottom">
+          <h5 class="m-0 fw-bold text-secondary">
+            <i class="fa fa-graduation-cap me-2 text-primary"></i>Eğitim Adımları
+          </h5>
+          <button class="btn btn-primary btn-sm px-3 shadow-sm" (click)="openModal()">
+            <i class="fa fa-plus me-1"></i> Yeni Adım Ekle
+          </button>
+        </div>
+        
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush" *ngIf="steps && steps.length > 0">
+            <li *ngFor="let step of steps" class="list-group-item p-3 list-group-item-action bg-transparent border-bottom">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-start">
+                  <div class="badge bg-primary-api rounded-circle me-3 mt-1 shadow-sm" style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;">
+                    {{ step.order }}
+                  </div>
+                  <div>
+                    <h6 class="fw-bold mb-1 step-text-title">{{ step.title }}</h6>
+                    <p class="mb-0 text-muted small">{{ step.description }}</p>
+                  </div>
+                </div>
+
+                <button class="btn btn-sm btn-outline-danger border-0 rounded-circle shadow-none ms-2" 
+                        (click)="deleteStep(step.id)" 
+                        title="Adımı Sil">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </li>
+          </ul>
+
+          <div *ngIf="!steps || steps.length === 0" class="text-center py-5 text-muted">
+            <i class="fa fa-layer-group fa-3x mb-3 opacity-25"></i>
+            <p class="fw-medium">Henüz bir eğitim adımı tanımlanmamış.</p>
+            <button class="btn btn-link btn-sm text-primary text-decoration-none" (click)="openModal()">
+              İlk adımı şimdi ekle
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<abp-modal [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h4 class="m-0 fw-bold"><i class="fa fa-plus-circle me-2 text-primary"></i>Yeni Eğitim Adımı</h4>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="saveStep()">
+      <div class="mb-3">
+        <label class="form-label fw-bold small">Adım Başlığı</label>
+        <input type="text" class="form-control shadow-none" formControlName="title" placeholder="Örn: Angular Temellerine Giriş" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold small">Açıklama</label>
+        <textarea class="form-control shadow-none" formControlName="description" rows="3" placeholder="Bu adımda ne öğrenilecek?"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold small">Sıralama (Order)</label>
+        <input type="number" class="form-control shadow-none" formControlName="order" placeholder="Örn: 1" />
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-outline-secondary px-4 border-0" (click)="isModalOpen = false">
+      Vazgeç
+    </button>
+    <button class="btn btn-primary px-4 shadow-sm" (click)="saveStep()" [disabled]="form.invalid">
+      <i class="fa fa-save me-1"></i> Adımı Kaydet
+    </button>
+  </ng-template>
+</abp-modal>
+
+<style>
+  /* Rozet ve Tasarım */
+  .bg-primary-api { background-color: #e7f1ff; color: #0d6efd; font-weight: bold; font-size: 0.85rem; }
+  
+  /* Satır Efekti */
+  .list-group-item-action:hover { background-color: rgba(13, 110, 253, 0.03) !important; }
+
+  /* Dark Mode Uyumu İçin Zorlayıcı Olmayan Renkler */
+  [data-appearance='dark'] .roadmap-card { background-color: #212529 !important; color: white !important; }
+  [data-appearance='dark'] .roadmap-title { color: #f8f9fa !important; }
+  [data-appearance='dark'] .step-text-title { color: #e9ecef !important; }
+  [data-appearance='dark'] .bg-primary-api { background-color: #0d6efd; color: #ffffff; }
+  [data-appearance='dark'] .list-group-item:hover { background-color: #2b3035 !important; }
+</style>

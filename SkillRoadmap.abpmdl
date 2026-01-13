@@ -1,0 +1,109 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/12/2026 18:50:51 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "SkillRoadmap.Application": {
+      "path": "src/SkillRoadmap.Application/SkillRoadmap.Application.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.Application.Tests": {
+      "path": "test/SkillRoadmap.Application.Tests/SkillRoadmap.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "SkillRoadmap.Domain.Shared": {
+      "path": "src/SkillRoadmap.Domain.Shared/SkillRoadmap.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.Application.Contracts": {
+      "path": "src/SkillRoadmap.Application.Contracts/SkillRoadmap.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.HttpApi": {
+      "path": "src/SkillRoadmap.HttpApi/SkillRoadmap.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.HttpApi.Client": {
+      "path": "src/SkillRoadmap.HttpApi.Client/SkillRoadmap.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.EntityFrameworkCore.Tests": {
+      "path": "test/SkillRoadmap.EntityFrameworkCore.Tests/SkillRoadmap.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "SkillRoadmap.EntityFrameworkCore": {
+      "path": "src/SkillRoadmap.EntityFrameworkCore/SkillRoadmap.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.TestBase": {
+      "path": "test/SkillRoadmap.TestBase/SkillRoadmap.TestBase.abppkg",
+      "folder": "test"
+    },
+    "SkillRoadmap.Domain.Tests": {
+      "path": "test/SkillRoadmap.Domain.Tests/SkillRoadmap.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "SkillRoadmap.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/SkillRoadmap.HttpApi.Client.ConsoleTestApp/SkillRoadmap.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "SkillRoadmap.DbMigrator": {
+      "path": "src/SkillRoadmap.DbMigrator/SkillRoadmap.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.HttpApi.Host": {
+      "path": "src/SkillRoadmap.HttpApi.Host/SkillRoadmap.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "SkillRoadmap.Domain": {
+      "path": "src/SkillRoadmap.Domain/SkillRoadmap.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

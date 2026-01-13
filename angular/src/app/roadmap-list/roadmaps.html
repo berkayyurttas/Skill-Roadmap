@@ -1,0 +1,169 @@
+<div class="container mt-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+      <h3 class="m-0 fs-4">
+        <i class="fa fa-map me-2"></i>Yol Haritaları
+      </h3>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-light border-0" (click)="toggleDarkMode()" [title]="isDarkMode ? 'Aydınlık Mod' : 'Karanlık Mod'">
+          <i class="fa" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+        </button>
+        
+        <button class="btn btn-light fw-bold shadow-sm" (click)="createRoadmap()">
+          <i class="fa fa-plus me-1"></i> Yeni Ekle
+        </button>
+      </div>
+    </div>
+
+    <div class="card-body p-0"> <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 35%" class="ps-4">Başlık</th>
+              <th style="width: 45%">Açıklama</th>
+              <th style="width: 20%" class="text-center">İşlemler</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of roadmaps" class="animate-row">
+              <td class="ps-4">
+                <div class="d-flex align-items-center">
+                  <div class="icon-box me-3">
+                    <i class="fa fa-route text-primary"></i>
+                  </div>
+                  <a [routerLink]="['/roadmaps', item.id]" 
+                     class="text-decoration-none fw-bold roadmap-link" 
+                     title="Detayları görüntülemek için tıkla">
+                    {{ item.title }}
+                  </a>
+                </div>
+              </td>
+              <td>
+                <span class="text-truncate d-inline-block" style="max-width: 400px;" [title]="item.description">
+                  {{ item.description }}
+                </span>
+              </td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-light text-info me-2 action-btn" (click)="editRoadmap(item.id)" title="Düzenle">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-light text-danger action-btn" (click)="deleteRoadmap(item.id)" title="Sil">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="roadmaps.length === 0" class="p-5 text-center">
+        <div class="empty-state-icon mb-3">
+          <i class="fa fa-folder-open fa-3x text-muted opacity-50"></i>
+        </div>
+        <h5 class="text-muted">Henüz bir yol haritası eklenmemiş.</h5>
+        <p class="text-secondary small">Hemen bir tane oluşturarak mentorluk sürecini başlatın.</p>
+        <button class="btn btn-primary btn-sm mt-2" (click)="createRoadmap()">
+          <i class="fa fa-plus me-1"></i> İlkini Ekle
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<abp-modal [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <div class="d-flex align-items-center">
+      <div class="modal-icon-bg me-3">
+        <i class="fa" [ngClass]="selectedRoadmapId ? 'fa-edit text-warning' : 'fa-plus text-success'"></i>
+      </div>
+      <h4 class="m-0 fw-bold">
+        {{ (selectedRoadmapId ? 'Yol Haritasını Düzenle' : 'Yeni Yol Haritası Oluştur') }}
+      </h4>
+    </div>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="save()" class="p-2">
+      <div class="form-floating mb-4">
+        <input 
+          type="text" 
+          id="roadmap-title" 
+          class="form-control" 
+          formControlName="title" 
+          placeholder="Başlık"
+          autofocus 
+        />
+        <label for="roadmap-title">Yol Haritası Başlığı</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <textarea 
+          id="roadmap-description" 
+          class="form-control" 
+          formControlName="description" 
+          style="height: 120px"
+          placeholder="Açıklama"
+        ></textarea>
+        <label for="roadmap-description">Kapsam ve Amaç</label>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-light px-4 border" (click)="isModalOpen = false">
+      Vazgeç
+    </button>
+    <button class="btn btn-primary px-4 shadow-sm" (click)="save()" [disabled]="form?.invalid">
+      <i class="fa fa-check-circle me-1"></i> {{ selectedRoadmapId ? 'Güncelle' : 'Oluştur' }}
+    </button>
+  </ng-template>
+</abp-modal>
+
+<style>
+  /* Modern CSS Dokunuşları */
+  .roadmap-link {
+    color: var(--abp-text-main, #2c3e50);
+    transition: all 0.2s ease;
+  }
+  .roadmap-link:hover {
+    color: #0d6efd !important;
+    padding-left: 5px;
+  }
+  .icon-box {
+    width: 35px;
+    height: 35px;
+    background: rgba(13, 110, 253, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .action-btn {
+    border-radius: 6px;
+    transition: transform 0.1s;
+  }
+  .action-btn:hover {
+    transform: scale(1.1);
+    background: #fff !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+  }
+  .modal-icon-bg {
+    width: 40px;
+    height: 40px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Satır animasyonu */
+  .animate-row {
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

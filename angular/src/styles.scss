@@ -1,0 +1,82 @@
+/* Mevcut Global Değişkenleriniz */
+:root {
+  --lpx-theme-light-bg: url('assets/images/login/login-bg-img-light.svg');
+  --lpx-theme-dim-bg: url('assets/images/login/login-bg-img-dim.svg');
+  --lpx-theme-dark-bg: url('assets/images/login/login-bg-img-dark.svg');
+
+  --lpx-logo-icon: url('assets/images/logo/icon-lite.svg');
+  --lpx-logo-url: var(--lpx-logo-icon);
+  --lpx-logo: var(--lpx-logo-icon);
+
+  .abp-logo {
+    background-repeat: no-repeat;
+  }
+
+  /* Mevcut Diğer Görsel Tanımlamalarınız */
+  .abp-support { width: 178px; height: 30px; background-image: url('assets/images/getting-started/abp-support.svg'); }
+  .abp-community { width: 215px; height: 30px; background-image: url('assets/images/getting-started/abp-community.svg'); }
+  .abp-blog { width: 142px; height: 30px; background-image: url('assets/images/getting-started/abp-blog.svg'); }
+  .logo-x { width: 20px; height: 20px; background-image: url('assets/images/getting-started/x.svg'); }
+}
+
+/* ============================================================
+   KARANLIK MOD (DARK MODE) ZORLAYICI STİLLER
+   ============================================================ */
+
+/* TypeScript tarafında [data-appearance='dark'] eklendiğinde devreye girer */
+[data-appearance='dark'] {
+  body {
+    background-color: #1a1c1e !important; /* Koyu arka plan */
+    color: #f8f9fa !important;           /* Açık renk metin */
+  }
+
+  /* Kart Yapıları */
+  .card {
+    background-color: #212529 !important;
+    border-color: #373b3e !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Tablo Yapıları */
+  .table {
+    color: #dee2e6 !important;
+    border-color: #495057 !important;
+    
+    thead th {
+      background-color: #2c3034 !important;
+      color: #ffffff !important;
+      border-bottom-color: #495057 !important;
+    }
+    
+    tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+
+  /* Modal ve Formlar */
+  .modal-content {
+    background-color: #212529 !important;
+    color: white !important;
+  }
+
+  .form-control {
+    background-color: #2b3035 !important;
+    border-color: #495057 !important;
+    color: white !important;
+
+    &:focus {
+      background-color: #32383e !important;
+      color: white !important;
+    }
+  }
+
+  /* Linkler ve Butonlar */
+  .roadmap-link {
+    color: #64b5f6 !important; /* Daha açık mavi (karanlık modda okunabilirlik için) */
+  }
+
+  .text-muted {
+    color: #adb5bd !important;
+  }
+}
