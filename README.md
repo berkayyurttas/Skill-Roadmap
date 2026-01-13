@@ -1,67 +1,69 @@
-﻿# SkillRoadmap
+Berkay, GitHub reponun "vitrini" olan harika bir README.md dosyası hazırladım. Bu dosya, projeyi inceleyen birine (veya ileride CV'ne bakan birine) ne kadar profesyonel bir süreç yönettiğini adım adım gösterecek.
 
-## About this solution
+Aşağıdaki metni kopyalayıp projenin ana dizinindeki README.md dosyasının içine yapıştır ve GitHub'a gönder.
 
-This is a layered startup solution based on [Domain Driven Design (DDD)](https://abp.io/docs/latest/framework/architecture/domain-driven-design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/solution-templates/layered-web-application) documentation for more info.
+Markdown
 
-### Pre-requirements
+# 🚀 Skill-Roadmap: Öğrenci Gelişim ve Mentorluk Takip Portalı
 
-* [.NET10.0+ SDK](https://dotnet.microsoft.com/download/dotnet)
-* [Node v18 or 20](https://nodejs.org/en)
+Bu proje, öğrencilerin gelişim süreçlerini takip etmek ve mentorluk faaliyetlerini yönetmek amacıyla geliştirilen, modern yazılım mimarilerini barındıran kapsamlı bir web uygulamasıdır.
 
-### Configurations
+## 🛠️ Kullanılan Teknolojiler
+* **Backend:** .NET 10 (ABP Framework tabanlı)
+* **Frontend:** Angular (Production Mode)
+* **Database:** PostgreSQL 16 (Dockerize)
+* **Cache:** Redis
+* **Containerization:** Docker & Docker Compose
+* **API Documentation:** Swagger UI
 
-The solution comes with a default configuration that works out of the box. However, you may consider to change the following configuration before running your solution:
+---
 
-* Check the `ConnectionStrings` in `appsettings.json` files under the `SkillRoadmap.HttpApi.Host` and `SkillRoadmap.DbMigrator` projects and change it if you need.
+## 🏗️ Adım Adım Neler Yaptık? (Geliştirme Günlüğü)
 
-### Before running the application
+Bu projenin Docker ortamında kusursuz çalışması için aşağıdaki kritik süreçler yönetilmiştir:
 
-* Run `abp install-libs` command on your solution folder to install client-side package dependencies. This step is automatically done when you create a new solution, if you didn't especially disabled it. However, you should run it yourself if you have first cloned this solution from your source control, or added a new client-side package dependency to your solution.
-* Run `SkillRoadmap.DbMigrator` to create the initial database. This step is also automatically done when you create a new solution, if you didn't especially disabled it. This should be done in the first run. It is also needed if a new database migration is added to the solution later.
+### 1. Ortamın Hazırlanması (Dockerize)
+* Uygulama; Backend, Frontend, PostgreSQL ve Redis servisleri olarak parçalara bölündü.
+* Tüm servislerin birbiriyle izole ve güvenli şekilde konuşabilmesi için bir `docker-compose.yml` ağı kuruldu.
 
-#### Generating a Signing Certificate
+### 2. Veritabanı Migration ve Seed Data
+* `DbMigrator` servisi kullanılarak PostgreSQL veritabanı şeması oluşturuldu ve başlangıç (admin) verileri yüklendi.
 
-In the production environment, you need to use a production signing certificate. ABP Framework sets up signing and encryption certificates in your application and expects an `openiddict.pfx` file in your application.
+### 3. SSL ve Kimlik Doğrulama (Auth) Çözümü
+* Docker konteynerleri arasında SSL sertifikası karmaşasını önlemek için `http` protokolü üzerinden güvenli bir iletişim köprüsü kuruldu.
+* Veritabanındaki `OpenIddictApplications` tabloları SQL ile güncellenerek (Redirect URIs), Angular ve Swagger girişlerindeki "400 Bad Request" hataları giderildi.
 
-To generate a signing certificate, you can use the following command:
+### 4. Swagger ve API Entegrasyonu
+* Swagger JSON tanımları doğrulanarak backend servisinin API dökümantasyonu erişilebilir hale getirildi.
+* OAuth2 akışı (authorization code flow) yapılandırılarak Swagger üzerinden doğrudan API testi yapma imkanı sağlandı.
 
-```bash
-dotnet dev-certs https -v -ep openiddict.pfx -p 39c14bb6-016d-473c-8584-883178302a82
-```
+---
 
-> `39c14bb6-016d-473c-8584-883178302a82` is the password of the certificate, you can change it to any password you want.
+## 🚀 Kurulum ve Çalıştırma
 
-It is recommended to use **two** RSA certificates, distinct from the certificate(s) used for HTTPS: one for encryption, one for signing.
+Projeyi yerelinizde çalıştırmak için aşağıdaki adımları izleyin:
 
-For more information, please refer to: [OpenIddict Certificate Configuration](https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html#registering-a-certificate-recommended-for-production-ready-scenarios)
+1.  **Repoyu Klonlayın:**
+    ```bash
+    git clone [https://github.com/berkayyurttas/Skill-Roadmap.git](https://github.com/berkayyurttas/Skill-Roadmap.git)
+    ```
 
-> Also, see the [Configuring OpenIddict](https://abp.io/docs/latest/Deployment/Configuring-OpenIddict#production-environment) documentation for more information.
+2.  **Docker Konteynerlerini Kaldırın:**
+    ```bash
+    docker-compose up -d
+    ```
 
-### Solution structure
+3.  **Uygulamaya Erişin:**
+    * **Frontend:** `http://localhost:4200`
+    * **Backend / Swagger:** `http://localhost:44334/swagger`
 
-This is a layered monolith application that consists of the following applications:
+### 🔑 Giriş Bilgileri
+* **Kullanıcı Adı:** `admin`
+* **Şifre:** `1q2w3E*`
 
-* `SkillRoadmap.DbMigrator`: A console application which applies the migrations and also seeds the initial data. It is useful on development as well as on production environment.
-* `SkillRoadmap.HttpApi.Host`: ASP.NET Core API application that is used to expose the APIs to the clients.
-* `angular`: Angular application.
+---
 
-
-## Deploying the application
-
-Deploying an ABP application follows the same process as deploying any .NET or ASP.NET Core application. However, there are important considerations to keep in mind. For detailed guidance, refer to ABP's [deployment documentation](https://abp.io/docs/latest/Deployment/Index).
-
-### Additional resources
-
-
-#### Internal Resources
-
-You can find detailed setup and configuration guide(s) for your solution below:
-
-* [Angular](./angular/README.md)
-
-#### External Resources
-You can see the following resources to learn more about your solution and the ABP Framework:
-
-* [Web Application Development Tutorial](https://abp.io/docs/latest/tutorials/book-store/part-1)
-* [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
+## 📈 Gelecek Planları (CI/CD)
+* [ ] GitHub Actions ile otomatik derleme (Build) ve test süreçleri.
+* [ ] Docker Image'larının otomatik olarak Docker Hub'a pushlanması.
+* [ ] Azure/AWS gibi bulut platformlarına otomatik dağıtım (Deployment).
